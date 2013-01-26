@@ -15,6 +15,16 @@
 
 
 window.friends = {};
+window.friendcount = 0;
+
+/** Checks if the facebook calls are done yet by comparing friend.length and the current friendcount which is incremented by apis */
+function facebookDoneYet(){
+  if(Object.keys(window.friends).length <= window.friendcount)
+    return true;
+  else
+    return false;
+}
+
 /** Facebook shit */
 FB.init({
   appId      : '481960308507673', // App ID
@@ -28,6 +38,7 @@ function getLikes(fbid,name){
     for(i in likes.data){
       window.friends[name].push(likes.data[i].name);
     }
+    window.friendcount++;
   });
 }
 
@@ -48,6 +59,13 @@ FB.login(function(response) {
 
 
 }, {scope: 'user_interests user_likes friends_interests friends_likes'});
+
+
+
+
+/** Some frontend for josh */
+
+
 
 
 
