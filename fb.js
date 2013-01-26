@@ -15,22 +15,6 @@
 
 
 window.friends = {};
-
-function apicall(call){
-  var ret = "lol";
-  $.ajax({
-    url: "https://graph.facebook.com"+call,
-    data: {access_token: window.accesstoken},
-    async:false,
-    success: function(response){ret = response.data; console.log('FAIL');}
-  });
-  return ret;
-}
-
-function getLikes(fbid) {
-  console.log(FB.api("/"+fbid+"/likes"));
-}
-
 /** Facebook shit */
 FB.init({
   appId      : '481960308507673', // App ID
@@ -39,10 +23,30 @@ FB.init({
   xfbml      : true  // parse XFBML
 });
 
+function getLikes(fbid,name){
+  FB.api("/"+fbid+"/likes", function(likes){
+    for(i in likes.data){
+      window.friends[name].push(likes.data[i].name);
+    }
+  });
+}
+
 /** Get access token to run queries */
 FB.login(function(response) {
   window.accesstoken = response.authResponse.accessToken;
-  console.log(apicall("/me"));
+
+  FB.api("/me/friends", function(me){
+    for(i in me.data){
+      window.friends[me.data[i].name] = [];
+    }
+    for(i in me.data){
+      getLikes(me.data[i].id,me.data[i].name); 
+    }
+  });
+
+
+
+
 }, {scope: 'user_interests user_likes friends_interests friends_likes'});
 
 
