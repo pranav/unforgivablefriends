@@ -1,3 +1,12 @@
+/*
+ * window.friends: = {
+ *  "Wylie Conlon" : ["Gossip Girl", "Archer"],
+ *  "Ali Ukani" : ["My Little Pony", "Nicki Minaj"]
+ * }
+ */
+
+window.friends = {};
+
 /** Facebook shit */
 window.fbAsyncInit = function() {
   FB.init({
@@ -9,18 +18,18 @@ window.fbAsyncInit = function() {
 
   /** Get access token to run queries */
   FB.login(function(response) {
-    window.accesstoken = response.authResponse.accessToken;
-    window.friends = [];
     FB.api('/me/friends', function(response){
-      for(var i = 0; i < 5; i++){
+      for(i in response.data){
         var fbid = response.data[i].id;
         name = response.data[i].name;
-        window.friends[name] = {likes: [{}]};
+        window.friends[name] = [];
+        console.log(name);
         FB.api('/'+fbid+'/likes',function(data){
-          window.friends[name].likes = data.data;
+          for(j in data.data){
+            window.friends[name].push(data.data[j].name);
+          }
         });
       }
-      console.log(window.friends);
     });
 
   }, {scope: 'user_interests user_likes friends_interests friends_likes'});
