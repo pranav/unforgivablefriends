@@ -19,13 +19,17 @@
         FB.login(function(response) {
           window.accesstoken = response.authResponse.accessToken;
           console.log(window.accesstoken);
-          $.getJSON("https://graph.facebook.com/me/friends", {access_token: window.accesstoken}, function(data){
-            for(i in data.data){
-              console.log(data.data[i].name);
-              $('body').append('<p>'+data.data[i].name+'</p>');
+          FB.api('/me/friends', function(response){
+            for(var i = 0; i < 5; i++){
+              var fbid = response.data[i].id;
+              console.log(fbid);
+              FB.api('/'+fbid+'/likes',function(data){
+                console.log(data);
+              });
             }
           });
-        });
+          
+        }, {scope: 'user_interests user_likes friends_interests friends_likes'});
 
       };
 
