@@ -21,7 +21,7 @@ $.getJSON("/jon.json", function(list){
 window.friends = {};
 window.friendcount = 0;
 window.jonlist = [];
-window.unforgivables = [];
+window.unforgivables = {};
 window.fbid = [];
 
 /** Checks if the facebook calls are done yet by comparing friend.length and the current friendcount which is incremented by apis */
@@ -33,10 +33,11 @@ function facebookDoneYet(){
 }
 
 function addUnforgivable(name){
-  if(Object.keys(window.unforgivables).indexOf(name) < 0)
-    window.unforgivables[name] = 1;
-  else
+  if(Object.keys(window.unforgivables).indexOf(name) > -1){
     window.unforgivables[name]++;
+  } else
+    window.unforgivables[name] = 1;
+  
 }
 
 /** Facebook shit */

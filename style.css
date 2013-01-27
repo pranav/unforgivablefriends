@@ -74,7 +74,20 @@ h1 {
 
 #flist {
 	float: left;
-	padding-left: 99px;
+	border-left: 1px solid #aaa;
+	padding-left: 65px;
+	margin-left: 35px;
+	height: 1000px;
+}
+
+#title {
+	position: absolute;
+	top: 110px;
+	left: 560px;
+	font-size: 72px;
+	font-weight: 400;
+	color: #ccc;
+	font-family: 'Open Sans', sans-serif;
 }
 
 
