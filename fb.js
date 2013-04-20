@@ -60,33 +60,63 @@ function getLikes(fbid,name){
 }
 
 /** Get access token to run queries */
-FB.getLoginStatus(function(statusresponse){
-  if(statusresponse.status == "connected"){
-    FB.api("/me/friends", function(me){
-      for(i in me.data){
-        window.friends[me.data[i].name] = [];
-        window.fbid[me.data[i].name] = me.data[i].id;
-      }
-      for(i in me.data){
-        getLikes(me.data[i].id,me.data[i].name); 
-      }
-    });
-  }
-  else {
-    FB.login(function(response) {
+function startFacebookSort(){
+  FB.getLoginStatus(function(statusresponse){
+    if(statusresponse.status == "connected"){
+      removeLoginPrompt();
+      showLoadingPrompt();
       FB.api("/me/friends", function(me){
-        for(i in me.data)
+        console.log(me);
+        for(i in me.data){
           window.friends[me.data[i].name] = [];
-        for(i in me.data)
+          window.fbid[me.data[i].name] = me.data[i].id;
+        }
+        for(i in me.data){
           getLikes(me.data[i].id,me.data[i].name); 
+        }
       });
-    }, {scope: 'user_interests user_likes friends_interests friends_likes'});
-  }
+    }
+  });
+}
 
+
+// On login, remove the prompt
+FB.Event.subscribe('auth.login', function(response){
+  removeLoginPrompt();
+  startFacebookSortn();
 });
 
+// Remove the login row
+function removeLoginPrompt(){
+  $('#loginprompt').html('');
+}
+
+function showLoadingPrompt(){
+  console.log('loading?');
+  $('#loginprompt').html('<h3>Loading facebook data...</h3><div class="progress progress-striped active"><div class="bar" style="width: 0%;"></div></div>');
+  window.loadingInterval = setInterval(function(){
+    $('.bar').css('width', ((window.friendcount) / (Object.keys(window.friends).length)) * 100 + '%');
+    if(facebookDoneYet()){
+      console.log('cleared interval');
+      doPostFacebookLoad();
+      clearInterval(window.loadingInterval);
+    }
+  }, 100);
+}
+
+
+function doPostFacebookLoad(){
+  removeLoginPrompt();
+
+}
 
 
 
 
 
+
+
+
+
+
+startFacebookSort();

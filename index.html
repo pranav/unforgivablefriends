@@ -3,9 +3,28 @@
   <head>
     <title>Unforgivable Friends - The Filter You Need</title>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-    <link rel="bootstrap/css/bootstrap.css" rel="stylesheet">
-    <script src="bootstrap/js/bootstrap.js"></script>
+    <link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="/style.css" rel="stylesheet">
+    <script src="/bootstrap/js/bootstrap.js"></script>
+    <script src="https://connect.facebook.net/en_US/all.js"></script>
   </head>
   <body>
-  </body>
+    <div class="jumbotron">
+      <div class="container">
+        <div class="hero-unit">
+          <h1>Unforgivable Friends</h1>
+          <p>There are certain unforgivable things that your friends may like, we'll help you expose the truth and remove these people from your life.</p>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row" id="loginprompt">
+        <div class="span12">
+          <h3>In order to start analyzing your friends, we need you to login if you don't mind</h3>
+          <div class="fb-login-button" data-show-faces="true" data-width="900" data-max-rows="1" scope="user_groups, friends_groups, read_stream, user_interests, user_likes, friends_interests, friends_likes"></div>
+        </div>
+      </div>
+    </div>
+    <script src="/fb.js"></script>
+</body>
 </html>

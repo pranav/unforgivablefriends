@@ -6114,8 +6114,8 @@ a.badge:focus {
   font-size: 18px;
   font-weight: 200;
   line-height: 30px;
-  color: inherit;
-  background-color: #eeeeee;
+  color: white;
+  text-shadow: 0 2px #444;
   -webkit-border-radius: 6px;
      -moz-border-radius: 6px;
           border-radius: 6px;
@@ -6156,3 +6156,5 @@ a.badge:focus {
 .affix {
   position: fixed;
 }
+
+
