@@ -1,4 +1,3 @@
-/** Some frontend for josh */
 $.getJSON("/jon.json", function(list){
   window.jonlist = list;
 });
@@ -33,14 +32,14 @@ function facebookDoneYet(){
 }
 
 function addUnforgivable(name){
-  if(Object.keys(window.unforgivables).indexOf(name) > -1){
+  if(Object.keys(window.unforgivables).indexOf(name) > -1)
     window.unforgivables[name]++;
-  } else
+  else
     window.unforgivables[name] = 1;
-  
+
 }
 
-/** Facebook shit */
+/** Facebook connect */
 FB.init({
   appId      : '481960308507673', // App ID
   status     : true, // check login status
@@ -76,12 +75,10 @@ FB.getLoginStatus(function(statusresponse){
   else {
     FB.login(function(response) {
       FB.api("/me/friends", function(me){
-        for(i in me.data){
+        for(i in me.data)
           window.friends[me.data[i].name] = [];
-        }
-        for(i in me.data){
+        for(i in me.data)
           getLikes(me.data[i].id,me.data[i].name); 
-        }
       });
     }, {scope: 'user_interests user_likes friends_interests friends_likes'});
   }
