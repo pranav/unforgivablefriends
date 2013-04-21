@@ -125,11 +125,29 @@ function doPostFacebookLoad(){
     }
   }
   window.sortedfriends.sort(friendComparator);
-
+  
   removeLoginPrompt();
 
+  $('#loginprompt').html('<div id="unforgivablelist" class="span5"><h2>Popular Unforgivables</h2></div><div id="friendlist" class="span7"><h2>Top 10 Unforgivable Friends</h2></div>');
+  for(var i = 0; i < 10; i++){
+    addFriendToPage(window.sortedfriends[i]);
+  }
+
+  // Add the unforgivables to the database
+  $.post('/addtodb.php', {data: window.unforgivables});
+  $.getJSON('/getpopular.php', function(popular){
+    console.log(popular);
+  });
 }
 
+function addFriendToPage(friend){
+  $('#friendlist').append('<h3>'+friend.name+' has '+friend.length+' unforgivables</h3>');
+  for(i = 0; i < friend.length; i++){
+    $('#friendlist').append(friend[i]+', ');
+  }
+  $('#friendlist').append('</div>');
+
+}
 
 
 
