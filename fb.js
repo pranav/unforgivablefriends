@@ -21,7 +21,7 @@ window.friends = {};
 window.friendcount = 0;
 window.jonlist = [];
 window.unforgivables = {};
-window.fbid = [];
+window.fbid = {};
 
 /** Checks if the facebook calls are done yet by comparing friend.length and the current friendcount which is incremented by apis */
 function facebookDoneYet(){
@@ -83,7 +83,7 @@ function startFacebookSort(){
 // On login, remove the prompt
 FB.Event.subscribe('auth.login', function(response){
   removeLoginPrompt();
-  startFacebookSortn();
+  startFacebookSort();
 });
 
 // Remove the login row
@@ -104,8 +104,28 @@ function showLoadingPrompt(){
   }, 100);
 }
 
+function friendComparator(a, b){
+  if(a.length > b.length) {
+    return -1;
+  }
+  else if(a.length < b.length) {
+    return 1;
+  }
+  else
+    return 0;
+}
 
 function doPostFacebookLoad(){
+  // Create a sorted array of friends
+  window.sortedfriends = [];
+  for(i in window.friends){
+    if(window.friends[i].length > 0) {
+      window.sortedfriends.push(window.friends[i]);
+      window.sortedfriends[window.sortedfriends.length - 1].name = i;
+    }
+  }
+  window.sortedfriends.sort(friendComparator);
+
   removeLoginPrompt();
 
 }
