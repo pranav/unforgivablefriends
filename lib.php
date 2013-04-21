@@ -29,8 +29,10 @@ function add_to_like($key, $num){
 function get_likes(){
   $q = query("SELECT * FROM likes ORDER BY count DESC");
   $return = array();
-
-
+  while($row = mysql_fetch_assoc($q)){
+    $return[] = $row;
+  }
+  return $return;
 }
 
 ?>

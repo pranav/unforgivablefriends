@@ -136,7 +136,9 @@ function doPostFacebookLoad(){
   // Add the unforgivables to the database
   $.post('/addtodb.php', {data: window.unforgivables});
   $.getJSON('/getpopular.php', function(popular){
-    console.log(popular);
+    for(i in popular){
+      $('#unforgivablelist').append('<h4>'+popular[i].name+' - '+popular[i].count+'</h4>');
+    }
   });
 }
 
