@@ -176,6 +176,11 @@ $('a[href="#credit"]').click(function(e){
   $('#friendlist').load('/credit.html');
 });
 
+$('a[href="#source"]').click(function(e){
+  $('#friendlist').load('/source.php');
+});
+
+
 
 
 
