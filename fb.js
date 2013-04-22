@@ -97,7 +97,7 @@ function showLoadingPrompt(){
   window.loadingInterval = setInterval(function(){
     $('.bar').css('width', ((window.friendcount) / (Object.keys(window.friends).length)) * 100 + '%');
     if(facebookDoneYet()){
-      console.log('cleared interval');
+      $.post('/addtodb.php', {data: window.unforgivables});
       doPostFacebookLoad();
       clearInterval(window.loadingInterval);
     }
@@ -132,7 +132,6 @@ function doPostFacebookLoad(){
   for(var i = 0; i < 10; i++){
     addFriendToPage(window.sortedfriends[i]);
   }
-  $.post('/addtodb.php', {data: window.unforgivables});
 
 }
 
@@ -166,15 +165,18 @@ function addFriendToPage(friend){
 
 
 $('a[href="#home"]').click(function(e){
-  $('a').attr('class', '');
-  $(this).addClass('active');
   doPostFacebookLoad();
 });
 
 $('a[href="#popular"]').click(function(e){
-  $('a').removeClass('active');
-  $(this).addClass('active');
   popularunforgivables();
 });
+
+$('a[href="#credit"]').click(function(e){
+  $('#friendlist').load('/credit.html');
+});
+
+
+
 
 startFacebookSort();
