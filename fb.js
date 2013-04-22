@@ -128,16 +128,25 @@ function doPostFacebookLoad(){
   
   removeLoginPrompt();
 
-  $('#loginprompt').html('<div id="unforgivablelist" class="span5"><h2>Popular Unforgivables</h2></div><div id="friendlist" class="span7"><h2>Top 10 Unforgivable Friends</h2></div>');
+  $('#loginprompt').html('<div id="friendlist" class="span12"><h1>Top 10 Unforgivable Friends</h2></div>');
   for(var i = 0; i < 10; i++){
     addFriendToPage(window.sortedfriends[i]);
   }
-
-  // Add the unforgivables to the database
   $.post('/addtodb.php', {data: window.unforgivables});
+
+}
+
+function popularunforgivables(){
+  // Add the unforgivables to the database
+  $('#friendlist').html('<h1>Popular Unforgivables</h1>');
   $.getJSON('/getpopular.php', function(popular){
     for(i in popular){
-      $('#unforgivablelist').append('<h4>'+popular[i].name+' - '+popular[i].count+'</h4>');
+      $('#friendlist').append('<h2>'+popular[i].count+' | '+popular[i].name+'</h2>');
+      for(j in window.friends){
+        if(window.friends[j].indexOf(popular[i].name)  > -1){
+          $('#friendlist').append(j + ', ');
+        }
+      }
     }
   });
 }
@@ -156,7 +165,16 @@ function addFriendToPage(friend){
 
 
 
+$('a[href="#home"]').click(function(e){
+  $('a').attr('class', '');
+  $(this).addClass('active');
+  doPostFacebookLoad();
+});
 
-
+$('a[href="#popular"]').click(function(e){
+  $('a').removeClass('active');
+  $(this).addClass('active');
+  popularunforgivables();
+});
 
 startFacebookSort();
