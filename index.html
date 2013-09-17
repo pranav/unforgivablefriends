@@ -89,7 +89,7 @@
   });
 
 
-  var waitForFB = setInterval(function() { if (facebookDoneYet()) { fillFriends(); fillTrending(); } }, 2000); 
+  var waitForFB = setInterval(function() { if (facebookDoneYet()) { fillFriends(); fillTrending(); $('#login-text, .fb-login-button').remove(); } }, 1000); 
 
   </script>
 
@@ -110,8 +110,9 @@
 
         <div id="flist">
             <h1>Your Most Unforgivable Friends</h1>
-            <p>Please login to facebook to begin analyzing your data</p>
+            <p id="login-text">Please login to facebook to begin analyzing your data</p>
             <div class="fb-login-button" data-show-faces="true" data-width="200" data-max-rows="2"></div>
+            <br />
             <span id="load"><img src="resources/ajax-loader.gif" /> Retrieving your friends and their list of likes. This could take up to one minute.<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Please wait and you will be disappointed shortly.</span>
             <!-- Friends inserted by jQuery -->
         </div>
